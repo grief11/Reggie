@@ -1,5 +1,6 @@
 package com.Itwang.reggie.filter;
 
+import com.Itwang.reggie.common.BaseContext;
 import com.Itwang.reggie.common.R;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +39,8 @@ public class LoginCheckFilter implements Filter {
 
         if (request.getSession().getAttribute("employee")!= null){
             filterChain.doFilter(request,response);
+            Long empId = (Long) request.getSession().getAttribute("employee");
+            BaseContext.setCurrentId(empId);
             return;
         }
 
