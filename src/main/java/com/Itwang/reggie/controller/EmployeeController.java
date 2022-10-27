@@ -52,10 +52,11 @@ public class EmployeeController {
 
     @PostMapping
     public R<String> save(HttpServletRequest request, @RequestBody Employee employee){
-        employee.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes(StandardCharsets.UTF_8)));
+        log.info("新增员工，员工信息：{}",employee.toString());
+        employee.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes()));
         employee.setCreateTime(LocalDateTime.now());
         employee.setUpdateTime(LocalDateTime.now());
-        long empId = (long) request.getSession().getAttribute("employee");
+        Long empId = (Long) request.getSession().getAttribute("employee");
         employee.setCreateUser(empId);
         employee.setUpdateUser(empId);
         employeeService.save(employee);
