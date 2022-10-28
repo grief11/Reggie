@@ -23,11 +23,12 @@ public class CategoryController {
 
     @PostMapping
     public R<String> save(@RequestBody Category category){
+        log.info("category:{}",category);
         categoryService.save(category);
         return R.success("新增分类成功");
     }
 
-    @GetMapping
+    @GetMapping("/page")
     public R<Page> page(int page,int pageSize){
         Page<Category> pageInfo = new Page<>(page, pageSize);
         LambdaQueryWrapper<Category> queryWrapper = new LambdaQueryWrapper<>();
@@ -36,9 +37,16 @@ public class CategoryController {
         return R.success(pageInfo);
     }
     @DeleteMapping
-    public R<String> delete(Long id){
-        log.info("删除分类，id为：{}",id);
-        categoryService.remove(id);
+    public R<String> delete(Long ids){
+        log.info("删除分类，id为：{}",ids);
+        categoryService.remove(ids);
         return R.success("分类信息删除成功");
     }
+    @PutMapping
+    public R<String> update(@RequestBody Category category){
+        log.info("修改的为{}",category);
+        categoryService.updateById(category);
+        return R.success("修改分类成功");
+    }
+
 }

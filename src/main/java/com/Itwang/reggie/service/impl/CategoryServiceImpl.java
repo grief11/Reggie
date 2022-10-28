@@ -21,6 +21,9 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper,Category> im
     @Autowired
     SetmealService setmealService;
 
+    @Autowired
+    private CategoryMapper categoryMapper;
+
     @Override
     public void remove(Long id) {
         LambdaQueryWrapper<Dish> dishQueryWrapper = new LambdaQueryWrapper<>();
@@ -31,10 +34,12 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper,Category> im
         }
         LambdaQueryWrapper<Setmeal> setmealQueryWrapper = new LambdaQueryWrapper<>();
         setmealQueryWrapper.eq(Setmeal::getCategoryId,id);
-        int count2 = dishService.count(dishQueryWrapper);
+        int count2 = setmealService.count(setmealQueryWrapper);
+        System.out.println("count2=" +count2);
         if (count2>0){
             throw new CustomException("当前分类下关联了套餐，不能删除");
         }
 
+        categoryMapper.deleteById(id);
     }
 }
