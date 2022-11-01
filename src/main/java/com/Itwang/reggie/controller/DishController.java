@@ -30,11 +30,24 @@ public class DishController {
     @Autowired
     CategoryService categoryService;
 
+    /**
+     * 菜品新增
+     * @param dishDto
+     * @return
+     */
     @PostMapping
     public R<String> save (@RequestBody DishDto dishDto){
         dishService.saveWithFlavor(dishDto);
         return R.success("新增菜品成功");
     }
+
+    /**
+     * 分页查询菜品信息
+     * @param page
+     * @param pageSize
+     * @param name
+     * @return
+     */
     @GetMapping("/page")
     public R<Page> page(int page,int pageSize,String name){
         Page<Dish> pageInfo = new Page<>(page, pageSize);
@@ -60,4 +73,19 @@ public class DishController {
         dishDtoPage.setRecords(list);
         return R.success(dishDtoPage);
     }
+
+    @GetMapping("/{id}")
+    public R<DishDto> get(@PathVariable Long id){
+        DishDto dishDto = dishService.getByIdFlavor(id);
+
+        return R.success(dishDto);
+    }
+
+
+    @PutMapping
+    public R<String> update(@RequestBody DishDto dishDto){
+        dishService.updateWithFlavor(dishDto);
+        return R.success("新增菜品成功");
+    }
+
 }
