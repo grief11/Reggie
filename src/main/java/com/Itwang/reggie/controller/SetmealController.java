@@ -26,7 +26,7 @@ public class SetmealController {
     @Autowired
     private SetmealService setmealService;
     @Autowired
-    private CategoryService categoryService
+    private CategoryService categoryService;
 
     @PostMapping
     public R<String> post(@RequestBody SetmealDto setmealDto){
